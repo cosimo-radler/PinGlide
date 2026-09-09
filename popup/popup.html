@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PinGlide</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="mark" aria-hidden="true">→</span>
+        <div>
+          <h1>PinGlide</h1>
+          <p>Keyboard browsing for image grids</p>
+        </div>
+      </header>
+
+      <label class="switch-row">
+        <span>
+          <strong>Enable on this tab</strong>
+          <small id="availability">Checking Pinterest…</small>
+        </span>
+        <input id="enabled" type="checkbox" disabled />
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+
+      <fieldset id="mode-fieldset" disabled>
+        <legend>Navigation</legend>
+
+        <label class="mode-card recommended">
+          <input type="radio" name="mode" value="smart" />
+          <span>
+            <strong>Automatic <em>Recommended</em></strong>
+            <small>Follow the current grid, then each newly selected Pin.</small>
+          </span>
+        </label>
+
+        <label class="mode-card">
+          <input type="radio" name="mode" value="source" />
+          <span>
+            <strong>Current grid</strong>
+            <small>Browse only the board, search, Home, or related grid on screen.</small>
+          </span>
+        </label>
+
+        <label class="mode-card">
+          <input type="radio" name="mode" value="related" />
+          <span>
+            <strong>Related only</strong>
+            <small>Open a Pin first and start from its recommendations.</small>
+          </span>
+        </label>
+      </fieldset>
+
+      <p class="keys"><kbd>←</kbd><kbd>→</kbd> browse · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

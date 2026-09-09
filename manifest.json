@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "PinGlide",
+  "version": "1.2.0",
+  "description": "Browse Pinterest images with arrow keys in a fast, private keyboard gallery.",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "PinGlide",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://pinterest.com/*",
+        "https://*.pinterest.com/*"
+      ],
+      "js": ["src/core.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
