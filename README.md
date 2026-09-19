@@ -6,7 +6,7 @@
 
 Browse Pinterest images with the arrow keys—without opening a new page for every Pin.
 
-`←` Previous &nbsp;&nbsp; `→` Next &nbsp;&nbsp; `Enter` Open Pin &nbsp;&nbsp; `Esc` Close
+`←` Previous &nbsp;&nbsp; `→` Next &nbsp;&nbsp; `Enter` Open Pin &nbsp;&nbsp; `M` Save to mymind &nbsp;&nbsp; `Esc` Close
 
 </div>
 
@@ -14,14 +14,16 @@ Browse Pinterest images with the arrow keys—without opening a new page for eve
 
 PinGlide is a lightweight Chrome extension that turns Pinterest boards, search results, Home feeds, and related Pins into a smooth image gallery. Click a Pin once, then glide through the collection with your keyboard.
 
-It is designed to feel like a natural part of Pinterest: no bulky controls, no page-by-page waiting, no tracking, and no data leaving your browser.
+It is designed to feel like a natural part of Pinterest: no bulky controls, no page-by-page waiting, no tracking. Images leave your browser only when you explicitly save them to mymind.
 
 ## Why PinGlide?
 
 Pinterest is excellent for discovering visual ideas, but comparing several images can mean repeatedly opening and closing individual Pin pages. PinGlide keeps the visual context intact and makes browsing feel immediate.
 
 - **Arrow-key navigation** through Pinterest images
-- **Fast gallery overlay** with adjacent-image preloading
+- **Fast gallery overlay** with decoded-image caching, adjacent preloading, and gentle transitions
+- **Always on** across Pinterest tabs and Chrome restarts
+- **Save to mymind with M** using an optional connection to your existing account
 - **Automatic context handling** for boards, searches, Home, and related Pins
 - **Native-feeling interaction** with a quiet, minimal interface
 - **Lazy-load support** that continues discovering Pins as you browse
@@ -37,14 +39,14 @@ PinGlide is currently installed as an unpacked extension:
 3. Enable **Developer mode** in the upper-right corner.
 4. Click **Load unpacked**.
 5. Select the folder containing `manifest.json`.
-6. Open Pinterest, click the PinGlide toolbar icon, and enable it for that tab.
+6. Open Pinterest. PinGlide is already on, including after Chrome restarts.
 
 > After updating PinGlide, click **Reload** on its card in `chrome://extensions`, then refresh any open Pinterest tabs.
 
 ## How to use it
 
 1. Visit Pinterest Home, a search result, a board, or a Pin's recommendations.
-2. Open PinGlide from the Chrome toolbar and switch on **Enable on this tab**.
+2. PinGlide starts automatically. Its toolbar switch can pause it across all Pinterest tabs.
 3. Click any regular Pin image.
 4. Browse with your keyboard.
 
@@ -53,32 +55,41 @@ PinGlide is currently installed as an unpacked extension:
 | Previous image | `←` |
 | Next image | `→` |
 | Open the real Pin page | `Enter` or click the image |
+| Save the enlarged image to mymind | `M` or **Save to mymind** |
 | Close the gallery | `Esc`, the close button, or the backdrop |
 
 Normal browser and Pinterest interactions remain untouched. Modified clicks, middle-clicks, context menus, Save, Favorite, Edit, and other Pin controls continue to work normally.
 
-## Navigation modes
+## One way to browse
 
-| Mode | Best for | Behavior |
-| --- | --- | --- |
-| **Automatic** | Everyday browsing | Follows the current collection and resets naturally when you commit to a new Pin. Recommended. |
-| **Current grid** | Comparing one board or search | Stays within the board, search, Home feed, or related grid currently on screen. |
-| **Related only** | Exploring one idea | Opens the selected Pin and builds a fresh gallery from its recommendations. |
+Navigation is automatic: PinGlide follows the current collection and resets naturally when you open a new Pin. There are no navigation modes to configure.
 
-PinGlide deliberately remembers only what helps the current tab. Your enabled setting survives a page reload, while image queues are rebuilt when the Pinterest route or browsing context changes. This prevents recommendations from an older Pin from leaking into a new collection.
+The popup has an On/Off switch, a Settings button, and four keyboard hints. Its rounded glass surface follows your system’s light or dark appearance. Switch and view animations respect reduced motion. Chrome draws an opaque native window behind toolbar popups, so the glass treatment is inside the popup; it does not blur the webpage underneath.
+
+Your enabled setting is saved across tabs and browser restarts. A deliberate pause stays paused until you turn it back on. Image queues remain in page memory and rebuild for the current browsing context.
+
+## Save to mymind
+
+1. Reload the extension and refresh Pinterest after updating.
+2. Open the PinGlide toolbar popup, choose **Settings** (the gear), then **Connect**. Chrome asks for optional access to `access.mymind.com` and its sign-in cookie.
+3. If prompted, sign in to your existing mymind account. Return to Settings to check the connection.
+4. Open a gallery image and press **M**. PinGlide saves the displayed image with the individual Pin URL as its source. A confirmation appears only after mymind responds successfully.
+
+The connection uses the image-save request implemented by mymind's Chrome extension v3.3 (`POST /objects`, media type). This is an unofficial integration, not a published stable API, and may need updating if mymind changes it. Chrome cannot invoke another extension's context-menu action, and mymind v3.3 has no external-message handler. Your normal mymind right-click menu remains available.
+
+Saving is optional. Use **Disconnect** in Settings to revoke access. Held or repeated M presses do not duplicate in-flight requests. Unconfirmed network requests are never retried automatically; check mymind before retrying. Saving from incognito tabs is not supported.
 
 ## Privacy
 
-PinGlide runs entirely inside your browser.
-
-- No analytics or telemetry
-- No account or sign-in
-- No external servers
-- No ads
-- No content uploads
+- No analytics, telemetry, ads, or remote code
 - No Pinterest API interception
+- Only `storage` permission is required for browsing
+- mymind access is optional and restricted to `https://access.mymind.com/*`
+- Saving sends the image URL, image description, and source Pin URL directly to mymind
+- Your mymind session is read only inside the extension's service worker; it is never logged, stored by PinGlide, or sent to Pinterest/content scripts
+- Disconnecting revokes optional permissions; it does not delete images you already saved
 
-The extension requests only Chrome's `storage` permission and access to Pinterest pages. Preferences are stored with Chrome extension storage; temporary gallery queues live only in session storage.
+Preferences use Chrome's synced extension storage. Gallery queues and the bounded image cache live only in the page's memory.
 
 ## Development
 
@@ -89,16 +100,17 @@ npm test
 npm run check
 ```
 
-The tests use Node's built-in test runner and cover Pin URL parsing, context detection, queue boundaries, deduplication, image selection, session restoration, and navigation behavior.
+The tests use Node's built-in test runner and cover Pin URL parsing, context detection, queue boundaries, deduplication, image selection, settings migration, save request validation, permission checks, duplicate saves, error handling, and navigation behavior.
 
 ### Project structure
 
 ```text
 manifest.json        Chrome extension manifest
-popup/               Toolbar popup UI
+icons/               Glass arrow icon, SVG source and Chrome PNG sizes
+popup/               Glass popup and mymind Settings
 src/core.js          Shared parsing and queue logic
 src/content.js       Pinterest integration and gallery UI
-src/background.js    Per-tab session lifecycle
+src/background.js    Persistent defaults and optional mymind saving
 tests/               Dependency-free unit tests
 ```
 
@@ -115,7 +127,7 @@ tests/               Dependency-free unit tests
 Wait for Pinterest to finish loading, scroll until several Pins are visible, then reopen the popup. Also confirm that the current page is a Pinterest Home feed, search, board, or Pin page.
 
 **Clicking a Pin still opens Pinterest normally**  
-Make sure PinGlide is enabled for that tab. Activation is intentionally per-tab, so opening Pinterest in another tab requires enabling it there too.
+Check the **On** switch in the popup. This preference applies to all Pinterest tabs and survives relaunches. After an extension update, reload the extension and refresh existing Pinterest tabs.
 
 **The extension stopped responding after an update**  
 Reload PinGlide from `chrome://extensions`, then refresh the Pinterest tab.
@@ -135,4 +147,3 @@ PinGlide is an independent, unofficial browser extension. It is not affiliated w
 Made with care by [Serif](https://serif.at)
 
 </div>
-# PinGlide

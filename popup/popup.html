@@ -3,57 +3,48 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <title>PinGlide</title>
+    <link rel="icon" href="../icons/icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <main>
-      <header>
-        <span class="mark" aria-hidden="true">→</span>
-        <div>
-          <h1>PinGlide</h1>
-          <p>Keyboard browsing for image grids</p>
+    <main class="glass" data-enabled="true">
+      <section id="home-view" class="view" aria-label="PinGlide">
+        <header>
+          <div class="identity"><img src="../icons/icon.svg" width="30" height="30" alt="" /><h1>PinGlide</h1></div>
+          <button id="open-settings" class="icon-button" type="button" aria-label="Settings" title="Settings" aria-controls="settings-view" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.7 3-.5 2a7 7 0 0 0-1.6.9l-2-.6-2.2 3.8 1.5 1.4a7 7 0 0 0 0 1.9L3.4 14l2.2 3.8 2-.6a7 7 0 0 0 1.6.9l.5 2h4.5l.5-2a7 7 0 0 0 1.6-.9l2 .6 2.2-3.8-1.5-1.5a7 7 0 0 0 0-1.9l1.5-1.4-2.2-3.8-2 .6a7 7 0 0 0-1.6-.9l-.5-2Z"/><circle cx="12" cy="11.6" r="3"/></svg>
+          </button>
+        </header>
+        <div class="switch-space">
+          <label class="toggle-row">
+            <span id="enabled-label" class="state-label">On</span>
+            <input id="enabled" type="checkbox" role="switch" aria-label="PinGlide" checked disabled />
+            <span class="switch" aria-hidden="true"><span class="switch-halo"></span><span class="switch-thumb"></span></span>
+          </label>
         </div>
-      </header>
-
-      <label class="switch-row">
-        <span>
-          <strong>Enable on this tab</strong>
-          <small id="availability">Checking Pinterest…</small>
-        </span>
-        <input id="enabled" type="checkbox" disabled />
-        <span class="switch" aria-hidden="true"></span>
-      </label>
-
-      <fieldset id="mode-fieldset" disabled>
-        <legend>Navigation</legend>
-
-        <label class="mode-card recommended">
-          <input type="radio" name="mode" value="smart" />
-          <span>
-            <strong>Automatic <em>Recommended</em></strong>
-            <small>Follow the current grid, then each newly selected Pin.</small>
-          </span>
-        </label>
-
-        <label class="mode-card">
-          <input type="radio" name="mode" value="source" />
-          <span>
-            <strong>Current grid</strong>
-            <small>Browse only the board, search, Home, or related grid on screen.</small>
-          </span>
-        </label>
-
-        <label class="mode-card">
-          <input type="radio" name="mode" value="related" />
-          <span>
-            <strong>Related only</strong>
-            <small>Open a Pin first and start from its recommendations.</small>
-          </span>
-        </label>
-      </fieldset>
-
-      <p class="keys"><kbd>←</kbd><kbd>→</kbd> browse · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
+        <footer class="shortcuts" aria-label="Keyboard shortcuts">
+          <div class="shortcut"><span class="key-pair"><kbd>←</kbd><kbd>→</kbd></span><span>Browse</span></div>
+          <div class="shortcut"><kbd>M</kbd><span>Save</span></div>
+          <div class="shortcut"><kbd aria-label="Enter" title="Enter">↵</kbd><span>Open</span></div>
+          <div class="shortcut"><kbd class="key-escape">esc</kbd><span>Close</span></div>
+        </footer>
+      </section>
+      <section id="settings-view" class="view settings-view" aria-label="Settings" hidden>
+        <header>
+          <button id="close-settings" class="icon-button" type="button" aria-label="Back" title="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg></button>
+          <h1>Settings</h1><span class="header-spacer" aria-hidden="true"></span>
+        </header>
+        <div class="connection">
+          <span class="mind-mark" aria-hidden="true">m</span>
+          <h2>mymind</h2>
+          <p id="mymind-status" role="status">Save images with M.</p>
+          <button id="connect-mymind" class="pill-button" type="button" disabled>Connect</button>
+          <button id="disconnect-mymind" class="text-button" type="button" hidden>Disconnect</button>
+        </div>
+      </section>
+      <p id="notice" class="notice" role="status" hidden></p>
     </main>
     <script src="popup.js"></script>
   </body>

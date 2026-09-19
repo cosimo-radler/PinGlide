@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a0b0e">
+  <meta name="description" content="Explore Pinterest with your arrow keys. A simple gallery extension by Serif.">
+  <title>Elsewhere — See more. Click less.</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/optimized/instrument-serif.38118a4c5d39.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/optimized/manrope-regular.512369521429.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="media.js" defer></script>
+  <script src="collection.js" defer></script>
+  <script src="gallery-template.js" defer></script>
+  <script src="app.js" defer></script>
+  <noscript><style>img[data-placeholder]{display:none}</style></noscript>
+</head>
+<body>
+  <div class="entrance" aria-hidden="true" hidden><div class="entrance-curtain"></div><div class="entrance-name">elsewhere<span>✳</span></div><div class="entrance-frames"></div></div>
+  <div class="hover-veil" aria-hidden="true"></div>
+  <button id="skip-intro" hidden>Skip intro ↗</button>
+  <a class="skip-link" href="#experience">Skip to the experience</a>
+  <header class="site-header">
+    <a class="wordmark" href="#" aria-label="Elsewhere home">elsewhere<span class="asterisk" aria-hidden="true">✳</span></a>
+    <nav aria-label="Main navigation"><button class="capture-link" data-open-capture>Capture <span class="capture-count" hidden>0</span></button><button class="nav-install install-trigger">Install</button></nav>
+  </header>
+  <main>
+    <div class="scroll-sequence"><section class="hero" aria-labelledby="hero-title">
+      <div class="pin-board" aria-hidden="true"></div><div class="board-shade" aria-hidden="true"></div>
+      <h1 id="hero-title" class="sr-only">Explore Pinterest with Elsewhere.</h1>
+      <div id="experience" class="experience" aria-label="Interactive image gallery">
+        <div class="gallery-track">
+          <button class="image-card side-card left-card" data-open="0" aria-label="Explore Study in red">
+            <span class="image-wrap"><img data-placeholder="sculpture" alt="A translucent red glass sphere balanced on brushed silver" width="800" height="1000"><noscript><img src="assets/sculpture.jpg" alt="A translucent red glass sphere balanced on brushed silver" width="800" height="1000"></noscript></span>
+            
+          </button>
+          <button class="image-card main-card" data-open="1" aria-label="Explore A different perspective">
+            <span class="image-wrap"><img data-placeholder="architecture" alt="Sculptural concrete architecture overlooking a cobalt blue sea" width="800" height="1000" fetchpriority="high"><noscript><img src="assets/architecture.jpg" alt="Sculptural concrete architecture overlooking a cobalt blue sea" width="800" height="1000" fetchpriority="high"></noscript></span>
+            
+          </button>
+          <button class="image-card side-card right-card" data-open="2" aria-label="Explore Somewhere slower">
+            <span class="image-wrap"><img data-placeholder="landscape" alt="Cypress trees on a golden Tuscan hillside" width="800" height="1000"><noscript><img src="assets/landscape.jpg" alt="Cypress trees on a golden Tuscan hillside" width="800" height="1000"></noscript></span>
+            
+          </button>
+        </div>
+        <div class="gallery-bottom"><button class="try-button scroll-trigger">Scroll to explore <span aria-hidden="true">↓</span></button></div>
+      </div>
+      <button class="scroll-image" data-open="1" aria-label="Enter enlarged gallery" hidden><img alt=""></button>
+      <div class="scroll-guide" aria-hidden="true"><span>One image. A little more space.</span><span><kbd>←</kbd> <kbd>→</kbd> to explore</span></div>
+    </section></div>
+    <section id="idea" class="walkthrough" aria-labelledby="idea-title">
+      <div id="capture" class="walk-stage" data-step="browse">
+        <div class="walk-heading"><h2 id="idea-title">Keep looking.</h2><p id="walk-description">Pinterest, one image at a time.</p></div>
+        <div class="walk-cards" aria-label="Try the gallery controls">
+          <button class="walk-card walk-side" id="walk-left" aria-label="Previous image"><img id="walk-image-left" alt=""></button>
+          <div class="walk-card walk-main"><img id="capture-demo-image" loading="lazy" decoding="async" alt="Elsewhere Capture poster" width="1120" height="1400"><span class="walk-saved" aria-hidden="true">✓</span><a id="walk-source" class="walk-source" target="_blank" rel="noreferrer">View original <span aria-hidden="true">↗</span></a></div>
+          <button class="walk-card walk-side" id="walk-right" aria-label="Next image"><img id="walk-image-right" alt=""></button>
+        </div>
+        <div class="walk-controls" aria-label="Try Elsewhere">
+          <div class="walk-control" data-control="browse"><div class="walk-key-pair"><button class="walk-key" id="walk-previous" aria-label="Previous image">←</button><button class="walk-key" id="walk-next" aria-label="Next image">→</button></div><span>Browse</span></div>
+          <div class="walk-control" data-control="capture"><button class="walk-key" id="capture-demo-button" aria-label="Capture this image" title="Capture · M">M</button><span>Capture</span></div>
+          <div class="walk-control" data-control="open"><button class="walk-key" id="walk-open" aria-label="Open original image" title="Open · Enter">↵</button><span>Open</span></div>
+        </div>
+        <div class="walk-bottom"><a class="extension-link" href="https://github.com/cosimo-radler/PinGlide" target="_blank" rel="noreferrer">Chrome extension <span aria-hidden="true">↗</span></a><span id="walk-cue">Scroll to discover <span aria-hidden="true">↓</span></span></div>
+      </div>
+    </section>
+    <section id="shortcuts" class="keyboard-section" aria-label="Keyboard shortcuts">
+      <div class="keyboard-guide">
+        <div class="keyboard-shortcut"><div class="keyboard-symbol" aria-label="Left and right arrow keys"><kbd>←</kbd><kbd>→</kbd></div><span>Browse</span></div>
+        <div class="keyboard-shortcut"><div class="keyboard-symbol"><kbd>Enter</kbd></div><span>Open</span></div>
+        <div class="keyboard-shortcut"><div class="keyboard-symbol"><kbd>Esc</kbd></div><span>Return</span></div>
+      </div>
+    </section>
+  </main>
+  <footer><a class="footer-wordmark" href="#" aria-label="Elsewhere, back to top">elsewhere<span aria-hidden="true">✳</span></a><div class="footer-bottom"><span>Independent. Not affiliated with Pinterest.</span><a href="https://serif.at" target="_blank" rel="noreferrer">Made by Serif ↗</a></div></footer>
+  <dialog id="gallery-dialog" class="gallery-dialog" aria-label="Elsewhere gallery"><div id="gallery-mount"></div></dialog>
+  <dialog id="capture-dialog" class="capture-dialog" aria-labelledby="collection-title"><div class="collection-header"><div><span class="story-index">Your visual memory</span><h2 id="collection-title">Capture</h2></div><button id="close-capture" class="collection-close" aria-label="Close Capture">×</button></div><p class="collection-note">Saved in this browser. Yours to come back to.</p><div id="capture-grid" class="capture-grid"></div><p id="capture-empty" class="capture-empty">Something catch your eye?<br>Open an image and press <kbd>M</kbd>.</p></dialog>
+  <div id="capture-status" class="capture-status" role="status"></div>
+  <dialog id="install-dialog" class="install-dialog" aria-labelledby="install-title"><button class="close-button" id="close-install" aria-label="Close installation instructions">Close <span aria-hidden="true">×</span></button><h2 id="install-title">Install Elsewhere</h2><p>Install the extension as PinGlide in Chrome.</p><ol><li><a href="https://github.com/cosimo-radler/PinGlide" target="_blank" rel="noreferrer">Open the project ↗</a>, choose <strong>Code → Download ZIP</strong>, then unzip it.</li><li>Open <code>chrome://extensions</code> in Chrome and enable <strong>Developer mode</strong>.</li><li>Choose <strong>Load unpacked</strong> and select the folder containing <code>manifest.json</code>.</li><li>Visit Pinterest, open the extension from the toolbar, and enable it for the current tab.</li></ol><p class="install-footnote">Click a Pin, then use ← and → to browse.</p></dialog>
+</body>
+</html>

@@ -1,15 +1,23 @@
 {
   "manifest_version": 3,
   "name": "PinGlide",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "Browse Pinterest images with arrow keys in a fast, private keyboard gallery.",
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "background": {
     "service_worker": "src/background.js"
   },
   "action": {
     "default_title": "PinGlide",
-    "default_popup": "popup/popup.html"
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
   },
   "content_scripts": [
     {
@@ -17,8 +25,23 @@
         "https://pinterest.com/*",
         "https://*.pinterest.com/*"
       ],
-      "js": ["src/core.js", "src/content.js"],
+      "js": [
+        "src/core.js",
+        "src/content.js"
+      ],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "optional_permissions": [
+    "cookies"
+  ],
+  "optional_host_permissions": [
+    "https://access.mymind.com/*"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
 }
